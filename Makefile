@@ -8,19 +8,19 @@ build:
 	uv sync
 
 app:
-	uv run python ./src/app.py my-command --a 1 --b 2
+	uv run python ./src/cli.py
 
 linting:
 	uv run ruff check src
 	uv run ruff check tests
 
-unittests:
-	uv run rm -f tests/test_files/log.log
-	# pytest tests
-	uv run coverage run -m pytest --durations=0 tests
-	uv run coverage html
+# unittests:
+# 	uv run rm -f tests/test_files/log.log
+# 	# pytest tests
+# 	uv run coverage run -m pytest --durations=0 tests
+# 	uv run coverage html
 
-tests: linting unittests
+# tests: linting unittests
 
 open_coverage:
 	open 'htmlcov/index.html'

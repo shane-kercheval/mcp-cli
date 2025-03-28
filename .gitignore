@@ -185,3 +185,4 @@ lid.176.ftz
 !language_codes.csv
 
 .vscode
+.jupyter_ystore.db
