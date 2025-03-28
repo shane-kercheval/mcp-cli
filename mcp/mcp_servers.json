@@ -17,7 +17,7 @@
         "env": {
           "SERVER_URL": "http://host.docker.internal:8888",
           "TOKEN": "MY_TOKEN",
-          "NOTEBOOK_PATH": "mcp_test.ipynb"
+          "NOTEBOOK_PATH": "mcp/mcp_test.ipynb"
         }
       },
       "Conda": {

@@ -1,6 +1,5 @@
 """A Textual app that acts as a chat terminal with a reasoning agent and CLI capabilities."""
 from copy import deepcopy
-from pathlib import Path
 from textual.app import App, ComposeResult
 from textual.containers import ScrollableContainer, Container
 from textual.widgets import TextArea, Static
@@ -16,9 +15,6 @@ from sik_llms.reasoning_agent import ReasoningAgent
 from sik_llms.mcp_manager import MCPClientManager
 from rich.markup import escape
 
-PROJECT_DIR = Path(__file__).parent.parent
-NOTEBOOK_PATH = PROJECT_DIR / 'mcp' / 'mcp_test.ipynb'
-assert NOTEBOOK_PATH.exists(), f"Notebook path {NOTEBOOK_PATH} does not exist."
 MCP_SERVERS_CONFIG = {
     "mcpServers": {
         "jupyter": {
@@ -38,7 +34,7 @@ MCP_SERVERS_CONFIG = {
             "env": {
                 "SERVER_URL": "http://host.docker.internal:8888",
                 "TOKEN": "MY_TOKEN",
-                "NOTEBOOK_PATH": str(NOTEBOOK_PATH),
+                "NOTEBOOK_PATH": 'mcp/mcp_test.ipynb',
             },
         },
         "Conda": {
@@ -264,11 +260,11 @@ class ChatTerminalApp(App):  # noqa: D101
 
             # Create a task for agent streaming
             async def stream_agent_response() -> None:  # noqa: PLR0915
-                tools = []
-                mcp_manager = MCPClientManager(configs=MCP_SERVERS_CONFIG)
-                await mcp_manager.connect_servers()
-                tools = mcp_manager.get_tools()
                 try:
+                    tools = []
+                    mcp_manager = MCPClientManager(configs=MCP_SERVERS_CONFIG)
+                    await mcp_manager.connect_servers()
+                    tools = mcp_manager.get_tools()
                     # Stream the agent's response
                     agent = ReasoningAgent(
                         model_name='gpt-4o',
